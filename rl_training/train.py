@@ -55,7 +55,7 @@ def train():
     # GPU-Optimized Scale Parameters
     num_envs = 16  # GPU benefits from massive parallel data collection
     total_timesteps = 2_000_000  # Doubled duration; GPU speed makes this affordable
-    model_dir = os.path.join("rl_training", "trained_models/v2_patched/")
+    model_dir = os.path.join("rl_training", "trained_models", "v3_refined")
     os.makedirs(model_dir, exist_ok=True)
 
     env = SubprocVecEnv([make_env() for _ in range(num_envs)])

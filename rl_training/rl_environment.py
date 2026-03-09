@@ -12,7 +12,7 @@ class ResonatorEnv(gym.Env):
         super(ResonatorEnv, self).__init__()
         self.resonator = QuantumResonatorSim()
         
-        # Action space: continuous frequency shift bounded between -1.0 and 1.0 (scales to +/- 5000 Hz)
+        # Action space: continuous frequency shift bounded between -1.0 and 1.0 (scales to +/- 3000 Hz)
         self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(1,), dtype=np.float32)
         
         # F-005 Fix: Tightened observation space bounds to reflect actual physical variable ranges.
@@ -71,8 +71,8 @@ class ResonatorEnv(gym.Env):
         """Executes one time step within the environment."""
         self.current_step += 1
         
-        # Apply action to shift frequency (+/- 5000 Hz max)
-        freq_shift = action[0] * 5000 
+        # Apply action to shift frequency (+/- 3000 Hz max)
+        freq_shift = action[0] * 3000 
         self.current_freq += freq_shift
         self.current_freq = np.clip(self.current_freq, 475e3, 525e3)
         
