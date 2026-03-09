@@ -55,7 +55,7 @@ def train():
     # GPU-Optimized Scale Parameters
     num_envs = 16  # GPU benefits from massive parallel data collection
     total_timesteps = 2_000_000  # Doubled duration; GPU speed makes this affordable
-    model_dir = os.path.join("rl_training", "trained_models")
+    model_dir = os.path.join("rl_training", "trained_models/v2_patched/")
     os.makedirs(model_dir, exist_ok=True)
 
     env = SubprocVecEnv([make_env() for _ in range(num_envs)])
@@ -86,7 +86,7 @@ def train():
         gamma=0.99,
         gae_lambda=0.95,        # Smooths advantage estimation variance
         clip_range=0.2,         # Prevents destructively large policy updates
-        ent_coef=0.01,          # Encourages necessary exploration in this highly stochastic environment
+        ent_coef=0.005,          # Encourages necessary exploration in this highly stochastic environment
         policy_kwargs=dict(net_arch=[256, 256]), # Deeper/wider net architecture easily handled by GPU
         tensorboard_log=os.path.join("data_logs", "ppo_tensorboard")
     )

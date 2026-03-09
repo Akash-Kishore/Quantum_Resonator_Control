@@ -11,7 +11,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
 from rl_training.rl_environment import ResonatorEnv
 
 def evaluate():
-    model_dir = os.path.join("rl_training", "trained_models")
+    model_dir = os.path.join("rl_training", "trained_models", "v2_patched")
     model_path = os.path.join(model_dir, "best_model")
     vec_norm_path = os.path.join(model_dir, "vec_normalize.pkl")
     
