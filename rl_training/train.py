@@ -43,7 +43,13 @@ def make_env():
         return ResonatorEnv()
     return _init
 
+import argparse
+
 def train():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seed", type=int, default=0)
+    args = parser.parse_args()
+    seed = args.seed
     # GPU Hardware Query
     gpu_name = torch.cuda.get_device_name(0)
     vram_total_mb = torch.cuda.get_device_properties(0).total_memory / (1024**2)
@@ -55,7 +61,7 @@ def train():
     # GPU-Optimized Scale Parameters
     num_envs = 16  # GPU benefits from massive parallel data collection
     total_timesteps = 2_000_000  # Doubled duration; GPU speed makes this affordable
-    model_dir = os.path.join("rl_training", "trained_models", "v3_refined")
+    model_dir = os.path.join("rl_training", "trained_models", "v4_gradient_obs", f"seed_{seed}")
     os.makedirs(model_dir, exist_ok=True)
 
     env = SubprocVecEnv([make_env() for _ in range(num_envs)])
@@ -122,7 +128,8 @@ def train():
         "n_steps": 4096,
         "batch_size": 512,
         "net_arch": "[256, 256]",
-        "final_sigma": 500.0
+        "final_sigma": 500.0,
+        "seed": seed
     }
     with open(os.path.join(model_dir, "training_metadata.json"), "w") as f:
         json.dump(metadata, f, indent=4)

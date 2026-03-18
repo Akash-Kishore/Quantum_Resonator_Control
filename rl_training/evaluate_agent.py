@@ -10,8 +10,17 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
 from rl_training.rl_environment import ResonatorEnv
 
+import argparse
+
 def evaluate():
-    model_dir = os.path.join("rl_training", "trained_models", "v3_refined")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", type=str, default="v3_refined")
+    parser.add_argument("--seed", type=int, default=None)
+    args = parser.parse_args()
+    if args.seed is not None:
+        model_dir = os.path.join("rl_training", "trained_models", args.model, f"seed_{args.seed}")
+    else:
+        model_dir = os.path.join("rl_training", "trained_models", args.model)
     model_path = os.path.join(model_dir, "best_model")
     vec_norm_path = os.path.join(model_dir, "vec_normalize.pkl")
     
@@ -31,7 +40,7 @@ def evaluate():
         print(f"Failed to load model or normalization stats: {e}", flush=True)
         sys.exit(1)
         
-    num_episodes = 10
+    num_episodes = 1000
     all_maes = []
     all_rewards = []
     all_amplitudes = []
@@ -82,12 +91,14 @@ def evaluate():
     # Calculate amplitude stability metric
     amps_array = np.array(all_amplitudes)
     amp_stability_pct = (np.sum(amps_array > 0.90) / len(amps_array)) * 100
+    low_amp_tail_pct = (np.sum(amps_array < 0.70) / len(amps_array)) * 100
     avg_inference_ms = np.mean(inference_times)
 
-    print("\n=== 10-Episode Evaluation ===")
+    print(f"\n=== {num_episodes}-Episode Evaluation | Model: {args.model} | Seed: {args.seed} ===")
     print(f"Mean MAE:      {np.mean(all_maes):.0f} Hz ± {np.std(all_maes):.0f} Hz")
     print(f"Mean Reward:   {np.mean(all_rewards):.1f} ± {np.std(all_rewards):.1f}")
     print(f"Amplitude > 0.90: {amp_stability_pct:.1f}% of timesteps")
+    print(f"Amplitude < 0.70: {low_amp_tail_pct:.1f}% of timesteps")
     print(f"Inference speed:  {avg_inference_ms:.3f} ms/step ({device.upper()})")
 
     print("\nGenerating performance visualizations...", flush=True)
@@ -108,6 +119,8 @@ def evaluate():
     ax2.set_xlabel("Measured EMA Amplitude")
     ax2.set_title(f"Amplitude Distribution ({num_episodes} Episodes)")
     ax2.axvline(x=1.0, color='r', linestyle=':', label="Ideal Max")
+    ax2.axvline(x=0.90, color='orange', linestyle='--', label="Near-resonance threshold (0.90)")
+    ax2.axvline(x=0.70, color='red', linestyle='--', label="Low-amplitude threshold (0.70)")
     ax2.legend()
     ax2.grid(True)
     
