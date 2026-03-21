@@ -11,26 +11,21 @@ class QuantumResonatorSim:
         self.q_factor = q_factor
         self.drift_sigma = drift_sigma
         self.noise_floor = noise_floor
-        self.theta = 0.05
-        self.mu = 500000.0
-        self.dt = 1.0
-        self.spike_prob = 0.02
-        self.spike_amplitude = 0.10
-
+        
     def _lorentzian_response(self, f):
         return 1.0 / (1.0 + (self.q_factor**2) * ((f - self.f0_current) / self.f0_current)**2)
 
     def step_drift(self):
-        self.f0_current += self.theta * (self.mu - self.f0_current) * self.dt \
-                           + self.drift_sigma * np.random.normal()
-        self.f0_current = np.clip(self.f0_current, 475000, 525000)
+        drift = np.random.normal(0, self.drift_sigma)
+        self.f0_current += drift
+        limit = 0.05 * self.f0_nominal
+        self.f0_current = np.clip(self.f0_current, 
+                                 self.f0_nominal - limit, 
+                                 self.f0_nominal + limit)
 
     def measure_amplitude(self, drive_frequency):
         true_amp = self._lorentzian_response(drive_frequency)
         measured_amp = true_amp + np.random.normal(0, self.noise_floor)
-        if np.random.random() < self.spike_prob:
-            spike = np.random.uniform(-self.spike_amplitude, self.spike_amplitude)
-            measured_amp += spike
         return np.clip(measured_amp, 0.0, 1.2)
 
     def reset(self):
