@@ -3,17 +3,11 @@ import sys
 import json
 import time
 import argparse
+import importlib
 import torch
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecNormalize
 from stable_baselines3.common.callbacks import BaseCallback, EvalCallback, CheckpointCallback
-from rl_training.rl_environment import ResonatorEnv
-
-# GPU Verification Gate - Hard stop if CUDA isn't available to prevent silent CPU fallback
-if not torch.cuda.is_available():
-    print("FATAL ERROR: CUDA is not available. GPU training aborted.")
-    print("Please verify your torch installation using the provided CUDA instructions.")
-    sys.exit(1)
 
 class DriftCurriculumCallback(BaseCallback):
     """
@@ -40,19 +34,50 @@ class DriftCurriculumCallback(BaseCallback):
         return True
 
 
-def make_env():
+# VERSION → environment module mapping
+# Add new ablation variants here only — do not modify existing entries
+ENV_MODULE_MAP = {
+    "v4_gradient_obs": "rl_training.rl_environment",
+    "v4a":             "rl_training.rl_environment_v4a",
+    "v4b":             "rl_training.rl_environment_v4b",
+}
+
+def get_env_class(version):
+    """Imports and returns the ResonatorEnv class for the given version string."""
+    if version not in ENV_MODULE_MAP:
+        print(f"FATAL ERROR: Unknown version '{version}'. Valid options: {list(ENV_MODULE_MAP.keys())}")
+        sys.exit(1)
+    module = importlib.import_module(ENV_MODULE_MAP[version])
+    return module.ResonatorEnv
+
+
+def make_env(version):
+    env_class = get_env_class(version)
     def _init():
-        return ResonatorEnv()
+        return env_class()
     return _init
 
 
 def train():
+    # GPU Verification Gate — inside train() so subprocess workers do not trigger it on re-import
+    if not torch.cuda.is_available():
+        print("FATAL ERROR: CUDA is not available. GPU training aborted.")
+        sys.exit(1)
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--version", type=str, default="v4_gradient_obs")
     args = parser.parse_args()
     seed = args.seed
     version = args.version
+
+    # Validate version and confirm env class loads before touching GPU
+    env_class = get_env_class(version)
+    test_env = env_class()
+    obs, _ = test_env.reset()
+    assert len(obs) == 5, f"FATAL: obs length {len(obs)} != 5 for version {version}"
+    print(f"[ENV CHECK] Version '{version}' loaded. obs shape: {obs.shape} — OK")
+    del test_env
 
     # GPU Hardware Query
     gpu_name = torch.cuda.get_device_name(0)
@@ -61,17 +86,23 @@ def train():
     print("=== GPU Training Pipeline Initialised ===")
     print(f"Device: CUDA | GPU: {gpu_name}")
     print(f"Total VRAM: {vram_total_mb:.1f} MB")
+    print(f"Version: {version} | Seed: {seed}")
 
     # GPU-Optimized Scale Parameters
     num_envs = 16
     total_timesteps = 2_000_000
-    model_dir = os.path.join("rl_training", "trained_models", version, f"seed_{seed}")
+
+    # Ablation variants save to their own subdirectory
+    if version in ("v4a", "v4b"):
+        model_dir = os.path.join("rl_training", "trained_models", version + "_ablation", f"seed_{seed}")
+    else:
+        model_dir = os.path.join("rl_training", "trained_models", version, f"seed_{seed}")
     os.makedirs(model_dir, exist_ok=True)
 
-    env = SubprocVecEnv([make_env() for _ in range(num_envs)])
+    env = SubprocVecEnv([make_env(version) for _ in range(num_envs)])
     env = VecNormalize(env, norm_obs=True, norm_reward=True, clip_obs=10.0)
 
-    eval_env = SubprocVecEnv([make_env()])
+    eval_env = SubprocVecEnv([make_env(version)])
     eval_env = VecNormalize(eval_env, norm_obs=True, norm_reward=False, clip_obs=10.0)
 
     eval_cb = EvalCallback(eval_env, best_model_save_path=model_dir,
