@@ -1,0 +1,60 @@
+{
+    "gaussian": {
+        "label": "Gaussian",
+        "mae_mean": 3599.7,
+        "mae_std": 5240.5,
+        "near_mean": 83.1,
+        "near_std": 18.5,
+        "low_mean": 5.8,
+        "low_std": 19.1
+    },
+    "ou": {
+        "label": "OU Noise",
+        "mae_mean": 1413.6,
+        "mae_std": 261.7,
+        "near_mean": 95.8,
+        "near_std": 5.1,
+        "low_mean": 0.0,
+        "low_std": 0.1
+    },
+    "best_pid_gaussian": {
+        "kp": 1.0,
+        "ki": 0.01,
+        "kd": 0.05
+    },
+    "best_pid_ou": {
+        "kp": 0.1,
+        "ki": 0.0,
+        "kd": 0.1
+    },
+    "_comment": [
+        "Best params: Kp=1.0, Ki=0.01, Kd=0.05 | MAE=2868.3 Hz",
+        "",
+        "=== PID Baseline | Gaussian | 1000 episodes ===",
+        "Kp=1.0, Ki=0.01, Kd=0.05",
+        "Mean MAE: 3599.7 +/- 5240.5 Hz",
+        "Amplitude > 0.90: 83.1% +/- 18.5%",
+        "Amplitude < 0.70: 5.8% +/- 19.1%",
+        "",
+        "Tuning PID for OU Noise...",
+        "Best params: Kp=0.1, Ki=0.0, Kd=0.1 | MAE=1403.0 Hz",
+        "",
+        "=== PID Baseline | OU Noise | 1000 episodes ===",
+        "Kp=0.1, Ki=0.0, Kd=0.1",
+        "Mean MAE: 1413.6 +/- 261.7 Hz",
+        "Amplitude > 0.90: 95.8% +/- 5.1%",
+        "Amplitude < 0.70: 0.0% +/- 0.1%",
+        "",
+        "",
+        "=== SUMMARY vs RL BASELINES ===",
+        "Model                 MAE (Hz)              Amp >0.90         Amp <0.70",
+        "---------------------------------------------------------------------------",
+        "V3 Gaussian           3333 +/- 1932         64.5%             13.4%",
+        "V4 Gaussian           2205 +/- 518          84.8% +/- 7.6%    5.1% +/- 3.7%",
+        "PID Gaussian          3599.7 +/- 5240.5     83.1%             5.8%",
+        "",
+        "V3 OU                 1241 +/- 254          97.7%             0.0%",
+        "V4 OU                 1284 +/- 93           97.9% +/- 0.4%    0.0%",
+        "PID OU                1413.6 +/- 261.7      95.8%             0.0%"
+    ]
+}
