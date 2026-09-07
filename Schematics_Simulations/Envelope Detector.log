@@ -1,0 +1,19 @@
+LTspice 26.0.1 for Windows
+Circuit: C:\MiniProject_Sem4\Schematics_Simulations\Envelope Detector.net
+Start Time: Fri Apr 24 19:48:59 2026
+solver = Normal
+Maximum thread count: 16
+tnom = 27
+temp = 27
+method = trap
+Direct Newton iteration failed to find operating point.
+Starting Gmin stepping
+Gmin stepping succeeded in finding the operating point.
+
+Total elapsed time: 230.592 seconds.
+
+Files loaded:
+C:\MiniProject_Sem4\Schematics_Simulations\Envelope Detector.net
+C:\Users\akash\AppData\Local\LTspice\lib\cmp\standard.dio
+C:\Users\akash\AppData\Local\LTspice\lib\sub\LTC.lib
+
