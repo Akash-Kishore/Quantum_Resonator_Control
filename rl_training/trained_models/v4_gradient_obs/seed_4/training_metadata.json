@@ -1,0 +1,11 @@
+{
+    "gpu_name": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+    "peak_vram_mb": 21.35009765625,
+    "total_timesteps": 2000000,
+    "training_duration_seconds": 2593.886529445648,
+    "n_steps": 4096,
+    "batch_size": 512,
+    "net_arch": "[256, 256]",
+    "final_sigma": 500.0,
+    "seed": 4
+}

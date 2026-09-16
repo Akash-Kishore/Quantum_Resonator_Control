@@ -18,3 +18,6 @@ Thumbs.db
 # Project specific exclusions
 data_logs/
 rl_training/trained_models/Schematics_Simulations/Envelope Detector.raw
+
+# Large simulator output
+Schematics_Simulations/Envelope Detector.raw
