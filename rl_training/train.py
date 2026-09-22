@@ -40,6 +40,17 @@ ENV_MODULE_MAP = {
     "v4_gradient_obs": "rl_training.rl_environment",
     "v4a":             "rl_training.rl_environment_v4a",
     "v4b":             "rl_training.rl_environment_v4b",
+    "confound_A":      "rl_training.rl_environment_confound_A",
+    "confound_B":      "rl_training.rl_environment_confound_B",
+}
+
+# Expected observation length per version
+EXPECTED_OBS_LEN = {
+    "v4_gradient_obs": 5,
+    "v4a": 5,
+    "v4b": 5,
+    "confound_A": 5,
+    "confound_B": 4,
 }
 
 def get_env_class(version):
@@ -75,7 +86,8 @@ def train():
     env_class = get_env_class(version)
     test_env = env_class()
     obs, _ = test_env.reset()
-    assert len(obs) == 5, f"FATAL: obs length {len(obs)} != 5 for version {version}"
+    expected_len = EXPECTED_OBS_LEN.get(version, 5)
+    assert len(obs) == expected_len, f"FATAL: obs length {len(obs)} != {expected_len} for version {version}"
     print(f"[ENV CHECK] Version '{version}' loaded. obs shape: {obs.shape} — OK")
     del test_env
 
