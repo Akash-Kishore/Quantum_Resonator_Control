@@ -4,12 +4,13 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
 from qiskit_integration.qiskit_resonator_env_v2 import QiskitResonatorEnvV2
 
-# Original V4 Seed 3 Paths [cite: 878-881]
-MODEL_PATH  = r'C:\MiniProject_Sem4\rl_training\trained_models\v4_gradient_obs\seed_3\best_model'
-STATS_PATH  = r'C:\MiniProject_Sem4\rl_training\trained_models\v4_gradient_obs\seed_3\vec_normalize.pkl'
+# Resolve repository root (MiniProject_Sem4)
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Updated Output Directory per user request
-OUT_DIR     = r'C:\MiniProject_Sem4\data_logs\qiskit_aer_simulation_2'
+# Paths relative to repo root
+MODEL_PATH = os.path.join(REPO_ROOT, 'rl_training', 'trained_models', 'v4_gradient_obs', 'seed_3', 'best_model')
+STATS_PATH = os.path.join(REPO_ROOT, 'rl_training', 'trained_models', 'v4_gradient_obs', 'seed_3', 'vec_normalize.pkl')
+OUT_DIR = os.path.join(REPO_ROOT, 'data_logs', 'qiskit_aer_simulation_2')
 os.makedirs(OUT_DIR, exist_ok=True)
 
 N_EPISODES = 500
