@@ -5,10 +5,13 @@ from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
 from stable_baselines3.common.callbacks import EvalCallback
 from qiskit_integration.qiskit_resonator_env_v3 import QiskitResonatorEnvV3
 
+# Resolve repository root
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # START FROM ORIGINAL SIMULATION CHECKPOINT — not v2
-MODEL_PATH  = r'C:\MiniProject_Sem4\rl_training\trained_models\v4_gradient_obs\seed_3\best_model'
-STATS_PATH  = r'C:\MiniProject_Sem4\rl_training\trained_models\v4_gradient_obs\seed_3\vec_normalize.pkl'
-SAVE_DIR    = r'C:\MiniProject_Sem4\data_logs\qiskit_aer_simulation_2\v4_qft_v3'
+MODEL_PATH  = os.path.join(REPO_ROOT, 'rl_training', 'trained_models', 'v4_gradient_obs', 'seed_3', 'best_model')
+STATS_PATH  = os.path.join(REPO_ROOT, 'rl_training', 'trained_models', 'v4_gradient_obs', 'seed_3', 'vec_normalize.pkl')
+SAVE_DIR    = os.path.join(REPO_ROOT, 'data_logs', 'qiskit_aer_simulation_2', 'v4_qft_v3')
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 TOTAL_TIMESTEPS = 150000
