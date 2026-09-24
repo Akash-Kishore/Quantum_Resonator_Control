@@ -17,6 +17,7 @@ ENV_MODULE_MAP = {
     "v4_gradient_obs": "rl_training.rl_environment",
     "v4a":             "rl_training.rl_environment_v4a",
     "v4b":             "rl_training.rl_environment_v4b",
+    "v3_refined":      "rl_training.rl_environment_v3",
 }
 
 def get_env_class(version):
@@ -51,7 +52,7 @@ def evaluate():
     vec_norm_path = os.path.join(model_dir, "vec_normalize.pkl")
 
     # Resolve environment version
-    # If not specified: use v4_gradient_obs for any v4 model, base env for v3
+    # If not specified: use v4_gradient_obs for any v4 model, v3_refined for v3 models
     if args.version is not None:
         version = args.version
     elif "v4a" in args.model:
@@ -60,9 +61,10 @@ def evaluate():
         version = "v4b"
     elif "v4" in args.model:
         version = "v4_gradient_obs"
+    elif "v3" in args.model:
+        version = "v3_refined"
     else:
-        # v3 or unknown — fall back to base env (4-element obs v3 env is in rl_environment_copy.py,
-        # but v3 was trained with the base rl_environment.py at the time; keep using it here)
+        # default fallback
         version = "v4_gradient_obs"
 
     env_class = get_env_class(version)
