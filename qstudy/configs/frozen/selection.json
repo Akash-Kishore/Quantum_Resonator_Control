@@ -1,0 +1,210 @@
+{
+ "status": "FROZEN (M4, CONTINUATION4; conditional approval M2-M3 passed, freeze_review_pack_v2)",
+ "frozen_at": "2026-10-15",
+ "selection": {
+  "C1_legacy_analog": "rl__rabi__plain",
+  "C2_best_plain": "rl__dither__plain",
+  "C3_best_hybrid_filter": "rl__dither__filter",
+  "C4_best_memory": "rl__ramsey_iq__gru8",
+  "C5_best_dr": "rl__dither__DRcurr",
+  "C6_best_full": "rl__dither__full"
+ },
+ "confirmatory_configs": [
+  "rl__rabi__plain",
+  "rl__rabi__gru8",
+  "rl__dither__plain",
+  "rl__dither__filter",
+  "rl__dither__DR",
+  "rl__dither__DRcurr",
+  "rl__dither__full",
+  "rl__ramsey_iq__plain",
+  "rl__ramsey_iq__gru8"
+ ],
+ "confirmatory_seeds": [
+  101,
+  102,
+  103,
+  104,
+  105,
+  106,
+  107,
+  108,
+  109,
+  110
+ ],
+ "hyperparameters": {
+  "learning_rate": 0.0003,
+  "ent_coef": 0.0,
+  "gamma": 0.99,
+  "total_steps": 2000000,
+  "source": "F6 tuning replicate (tune seeds 90-92; docs\\tuning.md): 3-seed means 0.7348 (ent 0.003) vs 0.7191 (ent 0.0); difference 0.0157 < larger sd 0.2166 -> ent_coef 0.0 (value used in the exploratory runs)"
+ },
+ "baselines": {
+  "ctrl:bayes:nominal": "assumes N0 (random walk, sigma 500 Hz, tau 50 us, T2 200 us exponential, readout 0.02/0.02, omega 5000, dither delta 2500) and sees only observables (counts, shots used this step, fc, probe type)",
+  "ctrl:bayes:oracle": "uses the true cell parameters (moment-matched random walk for non-Gaussian drifts; true contrast shape/override)",
+  "hybrid_filter_features": "use N0 in training and evaluation (cfg filter_assumed=oracle only for labelled diagnostics)",
+  "ctrl:oracle": "measured reference (previous true offset known)",
+  "ctrl:pid": "frozen per-probe tuned gains (configs\\pid_gains.json)",
+  "ctrl:hill": "rabi only",
+  "ctrl:noctrl": "never moves"
+ },
+ "contrast_sides": {
+  "C-1": [
+   "rl__dither__plain",
+   "rl__rabi__plain"
+  ],
+  "C-2": [
+   "rl__ramsey_iq__plain",
+   "rl__dither__plain"
+  ],
+  "C-3": [
+   "rl__dither__plain",
+   "ctrl:pid (dither)"
+  ],
+  "C-4": [
+   "rl__dither__plain",
+   "ctrl:bayes:nominal (dither)"
+  ],
+  "C-5": [
+   "rl__dither__filter",
+   "rl__dither__plain"
+  ],
+  "C-6": [
+   "rl__rabi__gru8",
+   "rl__rabi__plain"
+  ],
+  "C-7": [
+   "rl__dither__DRcurr",
+   "rl__dither__plain"
+  ],
+  "C-8": [
+   "rl__dither__DRcurr",
+   "rl__dither__DR"
+  ]
+ },
+ "val_scores_recomputed_F3": {
+  "DR": {
+   "rl__dither__DR": {
+    "mean": 0.45263333333333333,
+    "sd": 0.13106667894498664,
+    "n": 5
+   },
+   "rl__rabi__DR": {
+    "mean": 0.24855694444444446,
+    "sd": 0.07952284662667433,
+    "n": 5
+   },
+   "rl__ramsey_iq__DR": {
+    "mean": 0.45110555555555554,
+    "sd": 0.105378567056441,
+    "n": 5
+   }
+  },
+  "DRcurr": {
+   "rl__dither__DRcurr": {
+    "mean": 0.7795416666666667,
+    "sd": 0.01928954421969854,
+    "n": 5
+   },
+   "rl__rabi__DRcurr": {
+    "mean": 0.41413333333333335,
+    "sd": 0.08848169747468426,
+    "n": 5
+   },
+   "rl__ramsey_iq__DRcurr": {
+    "mean": 0.5552416666666666,
+    "sd": 0.15710291435637652,
+    "n": 5
+   }
+  },
+  "plain": {
+   "rl__dither__plain": {
+    "mean": 0.8321847222222222,
+    "sd": 0.016947490618720067,
+    "n": 5
+   },
+   "rl__rabi__plain": {
+    "mean": 0.5929402777777778,
+    "sd": 0.052894178930555834,
+    "n": 5
+   },
+   "rl__ramsey_iq__plain": {
+    "mean": 0.7796666666666666,
+    "sd": 0.036784302367393995,
+    "n": 5
+   }
+  },
+  "memory": {
+   "rl__rabi__K16": {
+    "mean": 0.2586555555555555,
+    "sd": 0.056125416647935196,
+    "n": 5
+   },
+   "rl__rabi__K4": {
+    "mean": 0.46271666666666667,
+    "sd": 0.020362794690324502,
+    "n": 5
+   },
+   "rl__rabi__K8": {
+    "mean": 0.3672847222222222,
+    "sd": 0.03611863336449521,
+    "n": 5
+   },
+   "rl__rabi__gru8": {
+    "mean": 0.48314861111111107,
+    "sd": 0.03733837520724867,
+    "n": 5
+   },
+   "rl__ramsey_iq__K16": {
+    "mean": 0.45700833333333335,
+    "sd": 0.02188487728943814,
+    "n": 5
+   },
+   "rl__ramsey_iq__K4": {
+    "mean": 0.4862611111111111,
+    "sd": 0.06194189873163346,
+    "n": 5
+   },
+   "rl__ramsey_iq__K8": {
+    "mean": 0.4512902777777778,
+    "sd": 0.036123006654496546,
+    "n": 5
+   },
+   "rl__ramsey_iq__gru8": {
+    "mean": 0.7193972222222222,
+    "sd": 0.07545415181958692,
+    "n": 5
+   }
+  },
+  "filter": {
+   "rl__dither__filter": {
+    "mean": 0.7643736111111111,
+    "sd": 0.0906892035770936,
+    "n": 5
+   },
+   "rl__rabi__filter": {
+    "mean": 0.6352513888888889,
+    "sd": 0.07455041454243616,
+    "n": 5
+   },
+   "rl__ramsey_iq__filter": {
+    "mean": 0.6837791666666666,
+    "sd": 0.09958008060219271,
+    "n": 5
+   }
+  },
+  "full": {
+   "rl__dither__full": {
+    "mean": 0.5508125,
+    "sd": 0.06885914946670321,
+    "n": 5
+   },
+   "rl__ramsey_iq__full": {
+    "mean": 0.4947847222222222,
+    "sd": 0.0698222058667496,
+    "n": 5
+   }
+  }
+ },
+ "notes": "C6=rl__dither__full is trained only in the confirmatory phase with the corrected filter features (exploratory full-family training verdict VALID; eval-side stress cells were re-run under the F1/F2 fix). C6 margin to the runner-up below one sd (no contrast uses C6); C-6 rabi gru8 margin to rabi K4 (0.020) below one sd - reported, not hidden."
+}

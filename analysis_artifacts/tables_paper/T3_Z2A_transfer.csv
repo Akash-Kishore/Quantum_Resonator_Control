@@ -1,0 +1,7 @@
+contrast,description,endpoint,arm_a_mean,arm_b_mean,mean_diff,u,p_exact,p_holm_m5,cliffs_delta,ci_lo,ci_hi,n_per_group,note,status
+TR-1,E1 LG zero-shot vs E4 RB-from-scratch 2M,"P2T (macro-avg lock_w1000 over RB OFAT, 34 cells)",0.146,0.4596,-0.3136,0.0,0.007937,0.039683,-1.0,-0.3785,-0.2543,5.0,"FINAL (n=5 vs 5, min exact p=0.00794)",FINAL
+TR-2,FTB_200k (LG+FT 200k) vs E4 RB 200k snapshot,"P2T (macro-avg lock_w1000 over RB OFAT, 34 cells)",0.4104,0.2658,0.1446,25.0,0.007937,0.039683,1.0,0.1066,0.1845,5.0,"FINAL (n=5 vs 5, min exact p=0.00794)",FINAL
+TR-3,PENDING - arms not run,P2T,,,,,,,,,,,PENDING_ARMS_NOT_RUN,PENDING
+TR-4,PENDING - arms not run,P2T,,,,,,,,,,,PENDING_ARMS_NOT_RUN,PENDING
+TR-5,PENDING - arms not run,P2T,,,,,,,,,,,PENDING_ARMS_NOT_RUN,PENDING
+SENS-2,FTB raw-snapshot P2T vs E4 200k P2T (n=5 vs 5),P2T,0.3955,0.2658,0.1297,25.0,0.007937,,1.0,0.0855,0.175,5.0,EXPLORATORY (sens2r_p2t.json); min exact p=0.00794; predeclared rule: FT advantage remains -> asymmetry CLOSED,EXPLORATORY

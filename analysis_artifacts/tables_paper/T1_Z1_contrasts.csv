@@ -1,0 +1,11 @@
+contrast,arm_a,arm_b,n_a,n_b,mean_diff,p_exact,effect_size,ci_lo,ci_hi,p_holm,status
+C-1,rl__dither__plain,rl__rabi__plain,10,10,0.2058,1.1e-05,1.0,0.185,0.2305,8.7e-05,FINAL
+C-2,rl__ramsey_iq__plain,rl__dither__plain,10,10,-0.0223,0.08921,-0.46,-0.044,-0.0013,0.08921,FINAL
+C-3,rl__dither__plain,ctrl:pid,10,1,-0.0565,0.001953,0.0,-0.0723,-0.0418,0.007812,FINAL
+C-4,rl__dither__plain,ctrl:bayes:nominal,10,1,-0.0406,0.001953,0.0,-0.0564,-0.0259,0.007812,FINAL
+C-5,rl__dither__filter,rl__dither__plain,10,10,-0.1003,0.000725,-0.84,-0.1452,-0.0587,0.003626,FINAL
+C-6,rl__rabi__gru8,rl__rabi__plain,10,10,-0.133,1.1e-05,-1.0,-0.16,-0.1073,8.7e-05,FINAL
+C-7,rl__dither__DRcurr,rl__dither__plain,10,10,-0.1535,1.1e-05,-1.0,-0.2104,-0.1035,8.7e-05,FINAL
+C-8,rl__dither__DRcurr,rl__dither__DR,10,10,0.1028,0.008931,0.68,0.0519,0.1601,0.017861,FINAL
+TR-1,E1_LG_zero_shot,E4_RB_from_scratch_2M,5,5,0.0,0.007937,-1.0,-0.3785,-0.2543,0.039683,FINAL
+TR-2,FTB_200k,E4_RB_200k_snapshot,5,5,25.0,0.007937,1.0,0.1066,0.1845,0.039683,FINAL
