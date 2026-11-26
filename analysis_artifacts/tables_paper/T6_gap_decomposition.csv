@@ -1,0 +1,4 @@
+effect,mean,sd,ci_low,ci_high,note
+lineshape_effect,0.2419,0.0389,0.2127,0.2730,EXPLORATORY n=5 seeds no hypothesis test
+noise_effect,0.0718,0.0911,-0.0041,0.1386,EXPLORATORY n=5 seeds no hypothesis test
+interaction,-0.1729,0.0644,-0.2240,-0.1219,EXPLORATORY n=5 seeds no hypothesis test

@@ -6,7 +6,7 @@ __pycache__/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Virtual environments (if created locally in the future)
+# Virtual environments
 env/
 venv/
 .conda/
@@ -15,9 +15,18 @@ venv/
 .DS_Store
 Thumbs.db
 
-# Project specific exclusions
-data_logs/
-rl_training/trained_models/Schematics_Simulations/Envelope Detector.raw
+# Large raw data files
+*.raw
 
-# Large simulator output
-Schematics_Simulations/Envelope Detector.raw
+# Exclude all .zip files EXCEPT those in model_checkpoints/
+*.zip
+!model_checkpoints/**/*.zip
+
+# Exclude other large directories (not included in this curated snapshot)
+data_logs/
+rl_training/trained_models/
+qstudy/runs/
+qstudy/runs_snap/
+qstudy/results/sealed/
+qstudy/db/*.sqlite
+qstudy/db/*.sqlite-*

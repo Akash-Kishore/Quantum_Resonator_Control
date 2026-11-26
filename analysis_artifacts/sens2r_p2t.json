@@ -1,0 +1,61 @@
+{
+ "exploratory": 1,
+ "sensitivity": true,
+ "never_FINAL": true,
+ "not_in_db": true,
+ "not_in_holm_family": true,
+ "endpoint": "P2T = macro-average lock_w1000 over RB OFAT cells (34 cells x 300 eps)",
+ "seeds": [
+  200,
+  201,
+  202,
+  203,
+  204
+ ],
+ "boot_seed": 20261012,
+ "n_boot": 10000,
+ "ftb_raw_snapshot_p2t_per_seed": {
+  "200": 0.374,
+  "201": 0.4266,
+  "202": 0.3498,
+  "203": 0.4398,
+  "204": 0.3875
+ },
+ "e4_200k_p2t_per_seed": {
+  "200": 0.2011,
+  "201": 0.3168,
+  "202": 0.2877,
+  "203": 0.2502,
+  "204": 0.2732
+ },
+ "ftb_old_p2t_per_seed": {
+  "200": 0.374,
+  "201": 0.4266,
+  "202": 0.4004,
+  "203": 0.4398,
+  "204": 0.4112
+ },
+ "old_vs_new": {
+  "202": {
+   "old": 0.4004,
+   "new": 0.3498,
+   "diff": -0.05059999999999998
+  },
+  "204": {
+   "old": 0.4112,
+   "new": 0.3875,
+   "diff": -0.0237
+  }
+ },
+ "mean_diff_ftb_minus_e4": 0.1297399999999999,
+ "u": 25.0,
+ "p_exact": 0.007936507936507936,
+ "cliffs_delta": 1.0,
+ "boot_ci_lo": 0.08550000000000008,
+ "boot_ci_hi": 0.17498000000000005,
+ "min_exact_p_n5v5": 0.00794,
+ "ft_advantage_remains": true,
+ "same_direction": true,
+ "p_lt_05": true,
+ "predeclared_rule_outcome": "FT advantage remains (same direction, exact unadjusted p < 0.05) -> selection asymmetry CLOSED as limitation"
+}

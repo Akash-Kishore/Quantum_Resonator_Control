@@ -1,0 +1,2 @@
+contrast,arm_a,arm_b,n_a,n_b,mean_diff,p_exact,effect_size,ci_lo,ci_hi,p_holm,status
+TR-4,E2 (env LB),E1 (env LG),5,5,0.1582,0.0159,0.92,0.0812,0.2321,0.0476,FINAL

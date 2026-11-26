@@ -1,0 +1,10 @@
+config,n_seeds,P1_sealed_mean,P1_sealed_sd,P2_sealed_mean,P2_sealed_sd
+rl__rabi__plain,10,0.6843,0.0449,0.5692,0.0378
+rl__rabi__gru8,10,0.5136,0.047,0.4351,0.0534
+rl__dither__plain,10,0.9012,0.0294,0.7753,0.0315
+rl__dither__filter,10,0.861,0.0621,0.6767,0.0477
+rl__dither__DR,10,0.5319,0.0824,0.5157,0.0698
+rl__dither__DRcurr,10,0.6371,0.0788,0.6186,0.0764
+rl__dither__full,10,0.5976,0.1137,0.5403,0.0568
+rl__ramsey_iq__plain,10,0.8655,0.0333,0.7521,0.0611
+rl__ramsey_iq__gru8,10,0.8097,0.0886,0.7068,0.1049
