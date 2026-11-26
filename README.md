@@ -55,6 +55,3 @@ These are excluded via `.gitignore`. The curated snapshot above represents the c
 - Sealed results: 276/300 random sample matches 26-Oct manifest
 - Database: 21 contrast rows correct (C-1..C-8 FINAL, TR-1/2/4 FINAL, TR-3/5 PENDING)
 - All checkpoints < 1 MB each
-
-## Target Journal
-IEEE Access — Case Study: "PPO RL for Quantum Resonator Calibration"
